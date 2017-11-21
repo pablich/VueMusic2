@@ -2,7 +2,7 @@
 #app
   vm-header
   section.section
-    nav.nav.has-shadow
+    nav.nav
       .container
         .field.has-addons
             input.input.is-large(
@@ -16,19 +16,28 @@
       p.help.is-info.has-text-right
               small {{ searchMessage }}
     .container.results(v-show="!loader")
+      VmNotification(v-show="showNotification")
+        p(slot="body") No se encontraron resultados
       .columns.is-multiline
         .column.is-one-quarter(v-for="track in tracks") 
-          vm-track(:track="track")
+          vm-track(
+            :class="{ 'is-active': track.id === selectedTrack }"
+            :track="track", 
+            @select="setSelectedTrack")
   vm-loader(v-show="loader")
   vm-footer
 </template>
 
 <script>
 import trackService from './services/track';
+
 import VmFooter from './components/layout/footer.vue';
 import VmHeader from './components/layout/header.vue';
+
 import VmTrack from './components/track.vue';
+
 import VmLoader from './components/shared/loader.vue';
+import VmNotification from './components/shared/notification.vue';
 
 export default {
   name: 'app',
@@ -37,6 +46,8 @@ export default {
       searchQuery: '',
       tracks: [],
       loader: false,
+      selectedTrack: '',
+      showNotification: false,
     };
   },
   components: {
@@ -44,10 +55,20 @@ export default {
     VmHeader,
     VmTrack,
     VmLoader,
+    VmNotification,
   },
   computed: {
     searchMessage() {
       return `Resultados encontrados ${this.tracks.length}`;
+    },
+  },
+  watch: {
+    showNotification() {
+      if (this.showNotification) {
+        setTimeout(() => {
+          this.showNotification = false;
+        }, 3000);
+      }
     },
   },
   methods: {
@@ -56,10 +77,14 @@ export default {
         this.loader = true;
         trackService.search(this.searchQuery)
           .then((res) => {
+            this.showNotification = res.tracks.total === 0;
             this.tracks = res.tracks.items;
             this.loader = false;
           });
       }
+    },
+    setSelectedTrack(id) {
+      this.selectedTrack = id;
     },
   },
 };

@@ -13,17 +13,23 @@
             strong {{ track.name }}
           p.subtitle.is-6 {{ track.artists[0].name }}
       .content
-        small {{ track.duration_ms}}
+        small Reproducciones: {{ track.duration_ms}}
         nav.level
           .level-left
-            a.level-item(:href="track.external_urls.spotify", target="_blank")
-              span.icon.is-small ▶️
+            a.level-item
+              span.icon.is-small(@click="selectTrack") ▶️
 </template>
 
 <script>
   export default {
     props: {
       track: { type: Object, required: true },
+    },
+    methods: {
+      selectTrack() {
+        this.$emit('select', this.track.id);
+        this.$bus.$emit('set-track', this.track);
+      },
     },
   };
 </script>
