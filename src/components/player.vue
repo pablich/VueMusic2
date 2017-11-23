@@ -1,5 +1,5 @@
 <template lang="pug">
-  .content.has-text-centered
+  .content.has-text-centered(v-if="track && track.album")
     p
       img(:src="track.album.images[0].url")
     p

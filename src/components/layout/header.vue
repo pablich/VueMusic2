@@ -1,12 +1,17 @@
 <template lang="pug">
   section.hero.is-primary.is-bold
     .hero-head
+      .container
         header.nav
-            .container
-                .nav-left
+            .navbar-menu
+                .navbar-start
                     .nav-item
                         strong 📻 VueMusic 2
-                .nav-right.nav-menu
+                .navbar-end
+                  .navbar-item
+                    router-link.nav-item(to="/") Home
+                  .navbar-item
+                    router-link.nav-item(to="about")  Acerca 
     .hero-body
         .container.has-text-centered
             h1.title VueMusic 2
@@ -14,7 +19,7 @@
             vm-player
 </template>
 <script>
-import VmPlayer from '../../components/player.vue';
+import VmPlayer from '../../components/Player.vue';
 
 export default {
   components: {

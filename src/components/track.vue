@@ -1,5 +1,5 @@
 <template lang="pug">
-  .card
+  .card(v-if="track && track.album")
     .card-image
       figure.image.is-1by1
         img(:src="track.album.images[0].url")
@@ -14,8 +14,11 @@
           p.subtitle.is-6 {{ track.artists[0].name }}
       .content.has-text-centered
         small Reproducciones: {{ track.duration_ms}}
+      .content.has-text-centered
         a.button.is-primary.is-outlined(@click="selectTrack")
               | Escuchar Preview
+        a.button.is-primary.is-outlined.details(@click="goToTrack(track.id)")
+              | Ver Detalles
 </template>
 
 <script>
@@ -28,10 +31,18 @@
         this.$emit('select', this.track.id);
         this.$bus.$emit('set-track', this.track);
       },
+      goToTrack(id) {
+        this.$router.push({ name: 'track', params: { id } });
+      },
     },
   };
 </script>
 
 <style scoped>
-
+  .column.is-4.is-offset-4 a.button.details {
+     display: none
+  }
+  .column.is-one-quarter a.button {
+        margin-bottom: 5px
+  }
 </style>
