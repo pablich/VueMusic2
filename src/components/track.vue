@@ -13,7 +13,7 @@
             strong {{ track.name }} 
           p.subtitle.is-6 {{ track.artists[0].name }}
       .content.has-text-centered
-        small Reproducciones: {{ track.duration_ms}}
+        small Popularidad: {{ track.popularity}}
       .content.has-text-centered
         a.button.is-primary.is-outlined(@click="selectTrack")
               | Escuchar Preview
