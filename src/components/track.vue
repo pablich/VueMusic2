@@ -15,9 +15,9 @@
       .content.has-text-centered
         small Popularidad: {{ track.popularity}}
       .content.has-text-centered
-        a.button.is-primary.is-outlined(@click="selectTrack")
+        button.button.is-primary.is-outlined(:disabled="!this.track.preview_url", @click="selectTrack")
               | Escuchar Preview
-        a.button.is-primary.is-outlined.details(@click="goToTrack(track.id)")
+        button.button.is-primary.is-outlined.details(@click="goToTrack(track.id)")
               | Ver Detalles
 </template>
 
@@ -28,7 +28,9 @@
     },
     methods: {
       selectTrack() {
-        this.$emit('select', this.track.id);
+        if (this.track.preview_url) {
+          this.$emit('select', this.track.id);
+        }
         this.$bus.$emit('set-track', this.track);
       },
       goToTrack(id) {
@@ -39,10 +41,10 @@
 </script>
 
 <style scoped>
-  .column.is-4.is-offset-4 a.button.details {
+  .column.is-4.is-offset-4 button.button.details {
      display: none
   }
-  .column.is-one-quarter a.button {
+  .column.is-one-quarter button.button {
         margin-bottom: 5px
   }
 </style>
