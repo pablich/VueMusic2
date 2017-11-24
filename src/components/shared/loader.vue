@@ -15,9 +15,6 @@
   color: #7957d5;
   text-indent: -9999em;
   margin: 88px auto;
-  position: absolute;
-  left: 50%;
-  top: 25%;
   font-size: 11px;
   -webkit-transform: translateZ(0);
   -ms-transform: translateZ(0);

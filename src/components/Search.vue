@@ -16,8 +16,9 @@ main
       p.help.is-info.has-text-right
               small {{ searchMessage }}
     .container.results(v-show="!loader")
-      VmNotification(v-show="showNotification")
-        p(slot="body") No se encontraron resultados
+      transition(name="move")
+         VmNotification(v-show="showNotification")
+           p(slot="body") No se encontraron resultados
       .columns.is-multiline
         .column.is-one-quarter(v-for="track in tracks") 
           vm-track(
@@ -25,7 +26,8 @@ main
             :class="{ 'is-active': track.id === selectedTrack }"
             :track="track", 
             @select="setSelectedTrack")
-  vm-loader(v-show="loader")
+  transition(name="move")
+     vm-loader(v-show="loader")
 </template>
 
 <script>

@@ -1,3 +1,13 @@
 .is-active{
     border: 1px solid #7957d5;
 }
+.move-enter-active, 
+.move-leave-active {
+    transform: translateX(0);
+    transition: all .3s linear;
+}
+
+.move-enter,
+.move-leave-to {
+    transform: translateX(100%);
+}

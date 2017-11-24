@@ -22,29 +22,26 @@
 </template>
 
 <script>
-  export default {
-    props: {
-      track: { type: Object, required: true },
+import trackMixin from './../mixins/track';
+
+export default {
+  mixins: [trackMixin],
+  props: {
+    track: { type: Object, required: true },
+  },
+  methods: {
+    goToTrack(id) {
+      this.$router.push({ name: 'track', params: { id } });
     },
-    methods: {
-      selectTrack() {
-        if (this.track.preview_url) {
-          this.$emit('select', this.track.id);
-        }
-        this.$bus.$emit('set-track', this.track);
-      },
-      goToTrack(id) {
-        this.$router.push({ name: 'track', params: { id } });
-      },
-    },
-  };
+  },
+};
 </script>
 
 <style scoped>
-  .column.is-4.is-offset-4 button.button.details {
-     display: none
-  }
-  .column.is-one-quarter button.button {
-        margin-bottom: 5px
-  }
+.column.is-4.is-offset-4 button.button.details {
+  display: none;
+}
+.column.is-one-quarter button.button {
+  margin-bottom: 5px;
+}
 </style>

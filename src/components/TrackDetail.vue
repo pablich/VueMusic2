@@ -1,24 +1,45 @@
 <template lang="pug">
   .container
-    .columns
-      .column.is-4.is-offset-4
-        vm-track(:track="track")
+    .columns(v-if="track && track.album")
+      .column.is-3.has-text-centered
+        figure.media-left
+          p.image
+            img(:src="track.album.images[0].url")
+          p
+            button.button.is-primary.is-large(@click="selectTrack")
+              | Escuchar preview
+      .column.is-8
+        .panel
+          .panel-heading
+            h1.title {{ track.name }}
+          .panel-block
+            article.media
+              .media-content
+                .content
+                  ul(v-for="(v, k) in track")
+                    li
+                      strong {{ k }}:&nbsp;
+                      span {{ v}}
+              nav.level
+                .level-left
+                  a.level-item
     vm-loader(v-show="loader")
 </template>
 
 <script>
-import VmTrack from './../components/Track.vue';
-import trackService from './../services/track';
 import VmLoader from './../components/shared/Loader.vue';
+import trackMixin from './../mixins/track';
+import trackService from './../services/track';
 
 export default {
+  mixins: [trackMixin],
   data() {
     return {
       track: {},
       loader: true,
     };
   },
-  components: { VmTrack, VmLoader },
+  components: { VmLoader },
   created() {
     trackService.getById(this.$route.params.id)
       .then((res) => {
