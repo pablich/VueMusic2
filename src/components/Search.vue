@@ -21,6 +21,7 @@ main
       .columns.is-multiline
         .column.is-one-quarter(v-for="track in tracks") 
           vm-track(
+            v-disabled="track.preview_url",
             :class="{ 'is-active': track.id === selectedTrack }"
             :track="track", 
             @select="setSelectedTrack")
@@ -69,6 +70,7 @@ export default {
     search() {
       if (this.searchQuery) {
         this.loader = true;
+        this.tracks = [];
         trackService.search(this.searchQuery)
           .then((res) => {
             this.showNotification = res.tracks.total === 0;
