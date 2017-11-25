@@ -5,9 +5,6 @@
         figure.media-left
           p.image
             img(:src="track.album.images[0].url")
-          p
-            button.button.is-primary.is-large(@click="selectTrack")
-              | Escuchar preview
       .column.is-8
         .panel
           .panel-heading
