@@ -1,8 +1,6 @@
 import musicService from './music';
 
-const trackService = {
-
-};
+const trackService = {};
 
 trackService.search = (q) => {
   const type = 'track';

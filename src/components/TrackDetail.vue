@@ -8,7 +8,7 @@
       .column.is-8
         .panel
           .panel-heading
-            h1.title {{ track.name }}
+            h1.title {{ trackTitle }}
           .panel-block
             article.media
               .media-content
@@ -20,29 +20,24 @@
               nav.level
                 .level-left
                   a.level-item
-    vm-loader(v-show="loader")
 </template>
 
 <script>
-import VmLoader from './../components/shared/Loader.vue';
-import trackMixin from './../mixins/track';
-import trackService from './../services/track';
+import { mapState, mapActions, mapGetters } from 'vuex';
 
 export default {
-  mixins: [trackMixin],
-  data() {
-    return {
-      track: {},
-      loader: true,
-    };
+  computed: {
+    ...mapState(['track']),
+    ...mapGetters(['trackTitle']),
   },
-  components: { VmLoader },
   created() {
-    trackService.getById(this.$route.params.id)
-      .then((res) => {
-        this.track = res;
-        this.loader = false;
-      });
+    if (!this.track || !this.track.id || this.track.id !== this.$route.params.id) {
+      this.getTrackById({ id: this.$route.params.id })
+        .then(() => { console.log('Track Cargado'); });
+    }
+  },
+  methods: {
+    ...mapActions(['getTrackById']),
   },
 };
 </script>
