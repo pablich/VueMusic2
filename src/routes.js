@@ -4,17 +4,17 @@ import TrackDetail from './components/TrackDetail.vue';
 
 const routes = [
   {
-    path: '/',
+    path: '/VueMusic2',
     component: Search,
     name: 'search',
   },
   {
-    path: '/about',
+    path: '/VueMusic2/about',
     component: About,
     name: 'about',
   },
   {
-    path: '/track/:id',
+    path: '/VueMusic2/track/:id',
     component: TrackDetail,
     name: 'track',
   },
